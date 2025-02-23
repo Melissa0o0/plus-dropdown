@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.37/moment-timezone-with-data-1970-2030.min.js"></script>
     <link rel="stylesheet" href="src/style.css" />
@@ -11,26 +13,30 @@
   <body>
     <div class="container">
       <h1>🕙 Clock 🕞</h1>
-
       <select id="city">
-        <option value="">Select a city</option>
-        <option value="europe/Paris">Paris 🇫🇷</option>
-        <option value="asia/Tokyo">Tokyo 🇯🇵</option>
-        <option value="australia/Sydney">Sydney 🇦🇺</option>
-        <option value="europe/Moscow">Moscow 🇷🇺</option>
-        <option value="america/Newyork">New York 🇺🇸</option>
-        <option value="europe/Berlin">Berlin 🇩🇪</option>
+        <option value="">Select a city 🌍</option>
+        <option value="current">Current location 📍</option>
+        <option value="europe/Paris">Paris🇫🇷</option>
+        <option value="asia/Tokyo">Tokyo🇯🇵</option>
+        <option value="australia/Sydney">Sydney🇦🇺</option>
+        <option value="europe/Moscow">Moscow🇷🇺</option>
+        <option value="america/New york">New York 🇺🇸</option>
       </select>
 
       <div id="cities">
-        <div class="current-city" id="current-city">
+        <div class="city" id="berlin">
           <div>
-            <h2 id="local-city"></h2>
-            <div class="date" id="local-date"></div>
+            <h2>Berlin</h2>
+            <div class="date"></div>
           </div>
-          <div class="time" id="local-time">
-            <small></small>
+          <div class="time"><small></small></div>
+        </div>
+        <div class="city" id="paris">
+          <div>
+            <h2>Paris</h2>
+            <div class="date">August 15th 2022</div>
           </div>
+          <div class="time">1:48:15 <small>AM</small></div>
         </div>
       </div>
     </div>
