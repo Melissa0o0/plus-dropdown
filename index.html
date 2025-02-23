@@ -5,34 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.37/moment-timezone-with-data-1970-2030.min.js"></script>
-    <link rel="stylesheet" href="src/style.css" />
+
     <title>Clock dropdown</title>
   </head>
+  <style>
+    body {
+      background-image: url("https://s3.amazonaws.com/shecodesio-production/uploads/files/000/158/463/original/Screenshot_2025-02-23_at_00.18.51.png?1740266372");
+      background-size: cover;
+      background-repeat: no-repeat;
+      z-index: -1;
+      font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+    }
+
+    .container {
+      background-color: black;
+      opacity: 0.9;
+      max-width: 500px;
+      margin: 150px auto;
+      padding: 20px;
+      z-index: -1;
+      border-radius: 25px;
+    }
+
+    #city {
+      min-width: 100%;
+      font-size: 18px;
+      border-radius: 20px;
+      box-shadow: 4px 4px rgb(102, 101, 101);
+      padding: 80px auto;
+      margin-bottom: 20px;
+      line-height: 10px;
+      color: black;
+      font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+      background-color: dimgray;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 45px;
+      font-weight: bold;
+      border-radius: 30px;
+      padding: 15px;
+      color: white;
+      text-shadow: 2px 2px #8d8989;
+      background-color: black;
+    }
+
+    #updated-city {
+      text-align: center;
+      font-size: 20px;
+      background-color: black;
+      color: white;
+      font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+      border-radius: 30px;
+      padding: 20px auto;
+      margin-top: 20px;
+    }
+
+    footer {
+      text-align: center;
+      line-height: 20px;
+      font-size: 14px;
+      color: black;
+      background-color: rgb(228, 221, 221);
+      max-width: 400px;
+      display: block;
+      margin: 0 auto;
+      border-radius: 5px;
+      bottom: 0;
+      position: sticky;
+
+      opacity: 0.6;
+    }
+  </style>
   <body>
     <div class="container">
       <h1>🕙 Clock 🕞</h1>
 
       <select id="city">
         <option value="">Select a city</option>
-        <option value="europe/Paris">Paris 🇫🇷</option>
-        <option value="asia/Tokyo">Tokyo 🇯🇵</option>
-        <option value="australia/Sydney">Sydney 🇦🇺</option>
-        <option value="europe/Moscow">Moscow 🇷🇺</option>
-        <option value="america/Newyork">New York 🇺🇸</option>
-        <option value="europe/Berlin">Berlin 🇩🇪</option>
+        <option value="Europe/Paris">Paris 🇫🇷</option>
+        <option value="Asia/Tokyo">Tokyo 🇯🇵</option>
+        <option value="Australia/Sydney">Sydney 🇦🇺</option>
+        <option value="Europe/Moscow">Moscow 🇷🇺</option>
+        <option value="America/Newyork">New York 🇺🇸</option>
+        <option value="Europe/Berlin">Berlin 🇩🇪</option>
       </select>
-
-      <div id="cities">
-        <div class="current-city" id="current-city">
-          <div>
-            <h2 id="local-city"></h2>
-            <div class="date" id="local-date"></div>
-          </div>
-          <div class="time" id="local-time">
-            <small></small>
-          </div>
-        </div>
-      </div>
+      <div id="updated-city"></div>
     </div>
 
     <footer>
@@ -41,6 +100,18 @@
       >
       by Melissa Shi
     </footer>
-    <script src="src/script.js"></script>
   </body>
+  <script>
+    function showDate(event) {
+      let currentTime = moment()
+        .tz(event.target.value)
+        .format("dddd, MMMM D, YYYY h:mm A");
+      let currentTimeElement = document.querySelector("#updated-city");
+      currentTimeElement.innerHTML = `It is ${currentTime} in ${event.target.value}`;
+      setInterval(showDate, 1000);
+    }
+
+    let selectElement = document.querySelector("#city");
+    selectElement.addEventListener("change", showDate);
+  </script>
 </html>

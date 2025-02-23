@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.37/moment-timezone-with-data-1970-2030.min.js"></script>
+
+    <title>Clock dropdown</title>
+  </head>
+  <style>
+    body {
+      background-image: url("https://s3.amazonaws.com/shecodesio-production/uploads/files/000/158/463/original/Screenshot_2025-02-23_at_00.18.51.png?1740266372");
+      background-size: cover;
+      background-repeat: no-repeat;
+      z-index: -1;
+      font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+    }
+
+    .container {
+      background-color: black;
+      opacity: 0.9;
+      max-width: 500px;
+      margin: 150px auto;
+      padding: 20px;
+      z-index: -1;
+      border-radius: 25px;
+    }
+
+    #city {
+      min-width: 100%;
+      font-size: 18px;
+      border-radius: 20px;
+      box-shadow: 4px 4px rgb(102, 101, 101);
+      padding: 80px auto;
+      margin-bottom: 20px;
+      line-height: 10px;
+      color: black;
+      font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+      background-color: dimgray;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 45px;
+      font-weight: bold;
+      border-radius: 30px;
+      padding: 15px;
+      color: white;
+      text-shadow: 2px 2px #8d8989;
+      background-color: black;
+    }
+
+    #cities {
+      text-align: center;
+      font-size: 20px;
+      background-color: black;
+      color: white;
+      font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+      border-radius: 30px;
+      padding: 20px auto;
+      margin-top: 20px;
+    }
+
+    .city {
+      text-align: center;
+      border-bottom: 1px solid #7d7d79;
+      padding: 30px 0;
+      border-radius: 10px;
+      margin-left: 10px;
+      margin-right: 10px;
+      background-color: black;
+      color: white;
+    }
+
+    .date {
+    }
+
+    .time {
+      padding: 10px;
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    .time small {
+      font-size: 24px;
+      line-height: 36px;
+      vertical-align: middle;
+    }
+
+    footer {
+      text-align: center;
+      line-height: 20px;
+      font-size: 14px;
+      color: black;
+      background-color: rgb(228, 221, 221);
+      max-width: 400px;
+      display: block;
+      margin: 0 auto;
+      border-radius: 5px;
+      bottom: 0;
+      position: sticky;
+
+      opacity: 0.6;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <h1>🕙 Clock 🕞</h1>
+
+      <select id="city">
+        <option value="">Select a city</option>
+        <option value="europe/Paris">Paris 🇫🇷</option>
+        <option value="asia/Tokyo">Tokyo 🇯🇵</option>
+        <option value="australia/Sydney">Sydney 🇦🇺</option>
+        <option value="europe/Moscow">Moscow 🇷🇺</option>
+        <option value="america/Newyork">New York 🇺🇸</option>
+        <option value="europe/Berlin">Berlin 🇩🇪</option>
+      </select>
+
+      <div id="cities">
+        <div class="current-city" id="current-city">
+          <div>
+            <h2 id="local-city"></h2>
+            <div class="date" id="local-date"></div>
+          </div>
+          <div class="time" id="local-time">
+            <small></small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <a href="https://github.com/Melissa0o0/plus-dropdown" target="_blank"
+        >Coded</a
+      >
+      by Melissa Shi
+    </footer>
+  </body>
+  <script>
+    function updateTime() {
+      let userTimeZone = moment.tz.guess();
+      let userTime = moment().tz(userTimeZone);
+
+      document.querySelector("#local-city").innerHTML = userTimeZone
+        .replace("_", " ")
+        .split("/")[1];
+      document.querySelector("#local-date").innerHTML =
+        userTime.format("MMMM Do YYYY");
+      document.querySelector("#local-time").innerHTML =
+        userTime.format("h:mm:ss A");
+    }
+
+    function updateCity(event) {
+      let cityTimeZone = event.target.value;
+      if (cityTimeZone === "current") {
+        cityTimeZone = moment.tz.guess();
+      }
+      let cityName = cityTimeZone.replace("_", " ").split("/")[1];
+      let cityTime = moment().tz(cityTimeZone);
+      let citiesElement = document.querySelector("#cities");
+      citiesElement.innerHTML = `
+ <div class="current-city">
+  <h2>${cityName}</h2>
+ <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
+   <div class="time">${cityTime.format("h:mm:ss A")}</div>
+ </div>`;
+
+      setInterval(() => {
+        let updatedTime = moment().tz(cityTimeZone);
+        document.querySelector(".time").innerHTML =
+          updatedTime.format("h:mm:ss A");
+      });
+    }
+
+    let citiesSelect = document.querySelector("#city");
+    citiesSelect.addEventListener("change", updateCity);
+
+    updateTime();
+    setInterval(updateTime, 1000);
+  </script>
+</html>
